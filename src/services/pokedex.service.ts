@@ -1,7 +1,7 @@
 const BASE_URL_POKEDEX = "https://pokeapi.co/api/v2/pokemon";
 
-export const getPaginated = (limit = 20) => {
-  return fetch(BASE_URL_POKEDEX + `?limit=${limit}`)
+export const getPaginated = (limit = 30, offset = 0) => {
+  return fetch(BASE_URL_POKEDEX + `?limit=${limit}&offset=${offset}`)
     .then((result) => result.json())
     .then(async (jsonResult) => {
       const jsonResultResults: any[] = [];
@@ -12,7 +12,7 @@ export const getPaginated = (limit = 20) => {
         const data = await getPokemonData(id);
 
         jsonResultResults.push({
-          name,
+          name: name.replace("-", " "),
           url,
           id,
           image: getPokemonImage(id),
@@ -20,7 +20,6 @@ export const getPaginated = (limit = 20) => {
         });
       }
       jsonResult.results = jsonResultResults;
-      console.log(jsonResult);
       return jsonResult;
     });
 };

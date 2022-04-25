@@ -4,11 +4,34 @@ import PokeCard from "../poke-card/poke-card";
 import { Container } from "./styles";
 
 function PokeGrid() {
+  let offset = 0;
+  let loading = false;
   const [pokemons, setPokemons] = useState([]);
 
+  const loadMorePokemons = () => {
+    if (loading) return;
+    loading = true;
+    getPaginated(30, offset).then((response) => {
+      setPokemons((pkmns) => [...pkmns, ...response.results]);
+      loading = false;
+      offset += 30;
+    });
+  };
+
+  const handleScroll = (e) => {
+    if (
+      window.innerHeight + e.target.scrollingElement.scrollTop + 1 >=
+      e.target.scrollingElement.scrollHeight
+    ) {
+      loadMorePokemons();
+    }
+  };
+
   useEffect(() => {
-    getPaginated().then((response) => {
-      setPokemons(response.results);
+    offset = 0;
+    loadMorePokemons();
+    window.addEventListener("scroll", (e) => {
+      handleScroll(e);
     });
   }, []);
 

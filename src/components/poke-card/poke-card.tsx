@@ -1,5 +1,14 @@
 import { useMemo } from "react";
-import { Container, PokemonImage, PokemonNameContainer } from "./styles";
+import {
+  Container,
+  PokemonImage,
+  PokemonImageLine,
+  PokemonImageCircle,
+  PokemonImageContainer,
+  PokemonNameContainer,
+  PokemonTextContainer,
+  PokemonTypesContainer,
+} from "./styles";
 
 import { POKEMON_TYPE_COLORS } from "../../constants";
 
@@ -13,11 +22,24 @@ function PokeCard({ pokemon }) {
   );
 
   return (
-    <Container color={backgroundColor}>
-      <PokemonNameContainer title={pokemon.name}>
-        {pokemon.name}
-      </PokemonNameContainer>
-      <PokemonImage src={pokemon.image} alt="" />
+    <Container color={backgroundColor} order={pokemon.id}>
+      <PokemonTextContainer>
+        <PokemonNameContainer title={pokemon.name}>
+          {pokemon.name}
+        </PokemonNameContainer>
+
+        <PokemonTypesContainer title={pokemon.name}>
+          {pokemon?.types.map(({ type }: any, i) => (
+            <span key={`tipes-${i}`}>{type.name}</span>
+          ))}
+        </PokemonTypesContainer>
+      </PokemonTextContainer>
+
+      <PokemonImageContainer>
+        <PokemonImageLine color={backgroundColor}></PokemonImageLine>
+        <PokemonImageCircle color={backgroundColor}></PokemonImageCircle>
+        <PokemonImage src={pokemon.image} alt="" />
+      </PokemonImageContainer>
     </Container>
   );
 }

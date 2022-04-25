@@ -8,7 +8,21 @@ export const Container = styled.div`
 
   padding: 10px;
   height: calc(100vh - 60px);
-
-  div {
+  
+  @media (max-width: 400px) {
+    grid-template-columns: repeat(1, 1fr);
   }
+
+  @media (min-width: 750px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (min-width: 1800px) {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
 `;
