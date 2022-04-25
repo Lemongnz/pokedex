@@ -1,6 +1,6 @@
 const BASE_URL_POKEDEX = "https://pokeapi.co/api/v2/pokemon";
 
-export const getPaginated = (limit = 10) => {
+export const getPaginated = (limit = 20) => {
   return fetch(BASE_URL_POKEDEX + `?limit=${limit}`)
     .then((result) => result.json())
     .then(async (jsonResult) => {

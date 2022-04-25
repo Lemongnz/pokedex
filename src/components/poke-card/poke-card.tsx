@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Container, PokemonImage } from "./styles";
+import { Container, PokemonImage, PokemonNameContainer } from "./styles";
 
 import { POKEMON_TYPE_COLORS } from "../../constants";
 
@@ -14,7 +14,9 @@ function PokeCard({ pokemon }) {
 
   return (
     <Container color={backgroundColor}>
-      {pokemon.name}
+      <PokemonNameContainer title={pokemon.name}>
+        {pokemon.name}
+      </PokemonNameContainer>
       <PokemonImage src={pokemon.image} alt="" />
     </Container>
   );
