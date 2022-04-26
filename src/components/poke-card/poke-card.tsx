@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Container,
   PokemonImage,
@@ -13,13 +13,12 @@ import {
   BackRowButton,
 } from "./styles";
 
-import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
 import { POKEMON_TYPE_COLORS } from "../../constants";
 import { motion } from "framer-motion";
 
-import './poke-card.css';
-
+import "./poke-card.css";
 
 function PokeCard({ pokemon }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +30,20 @@ function PokeCard({ pokemon }) {
     () => getColorByPokemonType(pokemon?.types[0]?.type.name),
     [pokemon.types]
   );
+
+  const escFunction = useCallback((e) => {
+    if (e.key === "Escape") {
+      closeCard(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("keydown", escFunction, false);
+
+    return () => {
+      document.removeEventListener("keydown", escFunction, false);
+    };
+  }, []);
 
   const openCard = (e) => {
     setIsOpen(true);
@@ -46,17 +59,30 @@ function PokeCard({ pokemon }) {
 
   return (
     <>
-      <motion.div layout className="pokeCard" transition={{ duration: 0.3 }} onClick={openCard} data-isopen={isOpen}>
-        <Container color={backgroundColor} order={pokemon.id} data-isopen={isOpen}>
-          {isOpen ? <BackRowButton onClick={closeCard}><AiOutlineArrowLeft /></BackRowButton> : null}
+      <motion.div
+        layout
+        className="pokeCard"
+        transition={{ duration: 0.3 }}
+        onClick={openCard}
+        data-isopen={isOpen}
+      >
+        <Container
+          color={backgroundColor}
+          order={pokemon.id}
+          data-isopen={isOpen}
+        >
+          {isOpen ? (
+            <BackRowButton onClick={closeCard}>
+              <AiOutlineArrowLeft />
+            </BackRowButton>
+          ) : null}
 
           <PokemonTextContainer>
-            {isOpen ?
+            {isOpen ? (
               <PokemonNumberContainer title={pokemon.name} data-isopen={isOpen}>
                 #{pokemon.id}
               </PokemonNumberContainer>
-              : null
-            }
+            ) : null}
 
             <PokemonNameContainer title={pokemon.name} data-isopen={isOpen}>
               {pokemon.name}
@@ -70,14 +96,31 @@ function PokeCard({ pokemon }) {
           </PokemonTextContainer>
 
           <PokemonImageContainer data-isopen={isOpen}>
-            <PokemonImageLine data-isopen={isOpen} color={backgroundColor}></PokemonImageLine>
-            <PokemonImageCircle data-isopen={isOpen} color={backgroundColor}></PokemonImageCircle>
+            <PokemonImageLine
+              data-isopen={isOpen}
+              color={backgroundColor}
+            ></PokemonImageLine>
+            <PokemonImageCircle
+              data-isopen={isOpen}
+              color={backgroundColor}
+            ></PokemonImageCircle>
             <PokemonImage src={pokemon.image} alt="" />
           </PokemonImageContainer>
         </Container>
       </motion.div>
 
-      <motion.div layout className="pokeCardDetails" transition={{ delay: 0.15, duration: 0.3, type: "spring", bounce: 0.45 }} animate={{ y: 0 }} data-isopen={isOpen}>
+      <motion.div
+        layout
+        className="pokeCardDetails"
+        transition={{
+          delay: 0.15,
+          duration: 0.3,
+          type: "spring",
+          bounce: 0.45,
+        }}
+        animate={{ y: 0 }}
+        data-isopen={isOpen}
+      >
         <ContainerDetails data-isopen={isOpen}>
           {JSON.stringify(pokemon.stats)}
         </ContainerDetails>
