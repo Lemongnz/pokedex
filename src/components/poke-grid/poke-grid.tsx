@@ -20,10 +20,7 @@ function PokeGrid() {
   };
 
   const handleScroll = (e) => {
-    if (
-      window.innerHeight + e.target.scrollTop + 1 >=
-      e.target.scrollHeight
-    ) {
+    if (window.innerHeight + e.target.scrollTop >= e.target.scrollHeight / 2) {
       loadMorePokemons();
     }
   };
@@ -33,13 +30,11 @@ function PokeGrid() {
   }, []);
 
   return (
-
-    < Container onScroll={handleScroll} >
+    <Container onScroll={handleScroll}>
       {pokemons?.map((pokemon: any) => (
         <PokeCard key={pokemon.id} pokemon={pokemon}></PokeCard>
-      ))
-      }
-    </Container >
+      ))}
+    </Container>
   );
 }
 
