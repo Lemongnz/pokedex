@@ -2,12 +2,13 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(auto-fill, 90px);
+  grid-template-columns: repeat(2,1fr);
+  grid-template-rows: repeat(auto-fill,90px);
   gap: 5px;
-
   padding: 10px;
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
+  position: relative;
+  overflow: scroll;
   
   @media (max-width: 400px) {
     grid-template-columns: repeat(1, 1fr);
@@ -24,5 +25,6 @@ export const Container = styled.div`
   @media (min-width: 1800px) {
     grid-template-columns: repeat(6, 1fr);
   }
+
 }
 `;
